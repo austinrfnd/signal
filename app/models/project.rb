@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
   BASE_PATH = "#{RAILS_ROOT}/public/projects"
-
+  # Override the default test environment
+  RAILS_TEST_ENV = "test"
+  
   has_friendly_id :name
   before_update :rename_directory
 
@@ -48,7 +50,7 @@ class Project < ActiveRecord::Base
   end
 
   def rake_build
-    rake "build -N RAILS_ENV=test >>"
+    rake "build -N RAILS_ENV=#{RAILS_TEST_ENV} >>"
   end
 
   def rake_deploy
